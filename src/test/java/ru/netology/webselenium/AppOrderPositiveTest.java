@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class AppOrderPositiveTest {
     private WebDriver driver;
 
@@ -35,10 +37,15 @@ public class AppOrderPositiveTest {
     }
 
     @Test
-    driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Тышко Татьяна");
+    public void successfulSubmissionForm() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Тышко Татьяна");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79991775395");
+        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(By.cssSelector("button.button")).click();
+        String actualText = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
+        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", actualText);
 
-
-
+    }
 
 
 }
